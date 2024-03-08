@@ -38,7 +38,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/dept")
-    public ResponseEntity<Page<Department>> getBydept(@RequestParam(value = "No.", defaultValue = "0", required = true) Integer pageNo,
+    public ResponseEntity<Page<Department>> getBydept(@RequestParam(value = "No", defaultValue = "0", required = true) Integer pageNo,
                                     @RequestParam(value = "Size", defaultValue = "5", required = true) Integer pageSize,
                                      @RequestParam(value = "studName", defaultValue = "Gauri", required = false)String studName){
         Pageable pageable = PageRequest.of(pageNo, pageSize);
