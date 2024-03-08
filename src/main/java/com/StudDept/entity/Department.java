@@ -15,7 +15,6 @@ import java.util.List;
 @Entity
 public class Department {
 
-    @NotEmpty
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long deptId;

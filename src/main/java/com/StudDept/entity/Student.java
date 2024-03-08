@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Student {
 
-    @NotEmpty
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long studId;
