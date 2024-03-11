@@ -10,12 +10,16 @@ import com.StudDept.request.UserAuthenticationRequest;
 import com.StudDept.request.UserRegistrationRequest;
 import com.StudDept.response.UserAuthenticationResponse;
 import com.StudDept.response.UserRegistrationResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -93,5 +97,28 @@ public class JwtAuthenticateService {
                     .user(user)
                     .build();
         tokenRepository.save(token);
+    }
+
+    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final String header = request.getHeader("Authorization");
+        final String refreshToken;
+        final String userEmail;
+        if (header == null || !header.startsWith("Bearer ")){
+            return;
+        }
+
+        refreshToken = header.substring(7);
+        userEmail = jwtHelperServices.extractUsername(refreshToken);
+        if (userEmail != null){
+            var user = userRepository.findByEmail(userEmail).orElseThrow();
+            if (jwtHelperServices.isTokenValid(refreshToken, user)){
+               var token = jwtHelperServices.generateRefreshToken(user);
+                var getRefreshToken = UserAuthenticationResponse.builder()
+                       .refreshToken(refreshToken)
+                       .accessToken(token)
+                       .build();
+               new ObjectMapper().writeValue(response.getOutputStream(), getRefreshToken);
+            }
+        }
     }
 }
