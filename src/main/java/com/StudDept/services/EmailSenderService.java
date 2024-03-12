@@ -16,11 +16,8 @@ public class EmailSenderService {
 
     private final JavaMailSender javaMailSender;
 
-    @Value("${application.properties:3}")
+    @Value("${spring.mail.username}")
     private String sender;
-
-    @Value("${application.properties:4}")
-    private String password;
 
     private String buildEmail(String email, String subject, String msgBody) throws MessagingException {
 
@@ -62,7 +59,7 @@ public class EmailSenderService {
     public String sendEmailToAuth(String email) throws MessagingException {
 
         String sub = "Authenticate User";
-        String msg = "Hello!\n You Have a Authority to Access! and Created tokens for you\n Thank You !";
+        String msg = "Hello!\n And,  Here you have that token. To access that authenticated urls...\n Thank You !";
 
         buildEmail(email, sub, msg);
 

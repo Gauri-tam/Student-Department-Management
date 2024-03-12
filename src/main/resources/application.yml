@@ -11,6 +11,8 @@ spring:
     properties:
       hibernate:
     database: postgresql
+  mail:
+    username: gauri@weetechsolution.com
 #    database-platform: org.hibernate.dialect.PostgreSQLDialect
 application:
   security:

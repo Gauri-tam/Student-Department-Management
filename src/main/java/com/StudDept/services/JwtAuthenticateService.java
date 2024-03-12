@@ -69,7 +69,7 @@ public class JwtAuthenticateService {
                 request.getUsername(),
                 request.getPassword()));
         var user = userRepository.findByEmail(request.getUsername()).orElseThrow();
-        emailSenderService.sendEmailToAuth(request.getUsername()); // sending email
+        emailSenderService.sendEmailToAuth(request.getUsername());                                                         // sending email
         var access = jwtHelperServices.generateAccessToken(user);
         var refresh = jwtHelperServices.generateRefreshToken(user);
         revokedToken(user);

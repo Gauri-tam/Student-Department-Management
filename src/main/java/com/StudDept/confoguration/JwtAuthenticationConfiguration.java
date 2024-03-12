@@ -1,9 +1,6 @@
 package com.StudDept.confoguration;
 
 import com.StudDept.repository.UserRepository;
-import jakarta.mail.Authenticator;
-import jakarta.mail.PasswordAuthentication;
-import jakarta.mail.Session;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -57,8 +54,8 @@ public class JwtAuthenticationConfiguration {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-        mailSender.setUsername("gauri@weetechsolution.com");
-        mailSender.setPassword("Gauri@123");
+        mailSender.setUsername("gauri@weetechsolution.com"); // your email
+        mailSender.setPassword("*********"); // your password
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.smtp.auth", "true");
