@@ -11,9 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/con")
+@RequestMapping("/api/v1/tea")
 @RequiredArgsConstructor
-public class StudentController {
+public class TeaController {
 
     private final StudentService studentService;
 
@@ -24,7 +24,7 @@ public class StudentController {
     }
 
     @PutMapping("/stud/{id}")
-    public ResponseEntity<String> updateStud(@PathVariable("id") long id,@RequestBody Student student){
+    public ResponseEntity<String> updateStud(@PathVariable("id") long id, @RequestBody Student student){
         String status = studentService.update(id, student);
         return new ResponseEntity<>(status, HttpStatus.CREATED);
     }
@@ -51,12 +51,4 @@ public class StudentController {
         Student status = studentService.getById(id);
         return new ResponseEntity<>(status, HttpStatus.CREATED);
     }
-
-
-    @DeleteMapping("/stud/{id}")
-    public ResponseEntity<Student> deleteStud(@PathVariable("id") Long id, Student student){
-        Student status = studentService.delete(id, student);
-        return new ResponseEntity<>(status, HttpStatus.CREATED);
-    }
-
 }

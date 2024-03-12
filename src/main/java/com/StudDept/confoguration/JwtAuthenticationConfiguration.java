@@ -44,7 +44,6 @@ public class JwtAuthenticationConfiguration {
     }
 
     @Bean
-
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
@@ -54,8 +53,8 @@ public class JwtAuthenticationConfiguration {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-        mailSender.setUsername("gauri@weetechsolution.com"); // your email
-        mailSender.setPassword("*********"); // your password
+        mailSender.setUsername("gauri@weetechsolution.com");                           // your email
+        mailSender.setPassword("*********");                                           // your password
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.smtp.auth", "true");

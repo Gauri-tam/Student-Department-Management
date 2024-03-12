@@ -15,8 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import static com.StudDept.enumarate.Permission.*;
-import static com.StudDept.enumarate.Role.HOD;
-import static com.StudDept.enumarate.Role.PRINCIPLE;
+import static com.StudDept.enumarate.Role.*;
 import static org.springframework.http.HttpMethod.*;
 
 @Configuration
@@ -34,18 +33,21 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request->request
-                        .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/api/v1/con/**").permitAll()                                         // mail url to create end point
-                        .requestMatchers( "/api/v1/pri/**").hasRole(PRINCIPLE.name())
-                        .requestMatchers(GET,"/api/v1/pri/**" ).hasAuthority(PRINCIPLE_READ.name())
-                        .requestMatchers(POST,"/api/v1/pri/**" ).hasAuthority(PRINCIPLE_CREATE.name())
-                        .requestMatchers(PUT,"/api/v1/pri/**" ).hasAuthority(PRINCIPLE_UPDATE.name())
-                        .requestMatchers(DELETE,"/api/v1/pri/**" ).hasAuthority(PRINCIPLE_DELETE.name())
-                        .requestMatchers("/api/v1/hod/**").hasAnyRole(PRINCIPLE.name(), HOD.name())
-                        .requestMatchers(GET, "/api/v1/hod/**").hasAnyAuthority(PRINCIPLE_READ.name(), HOD_READ.name())
-                        .requestMatchers(POST,"/api/v1/hod/**").hasAnyAuthority(PRINCIPLE_CREATE.name(), HOD_CREATE.name())
-                        .requestMatchers(PUT,"/api/v1/hod/**").hasAnyAuthority(PRINCIPLE_UPDATE.name(), HOD_UPDATE.name())
-//                        .anyRequest().authenticated())                                                                  // it will access all url which is present in your project.
+                                .requestMatchers("/api/v1/auth/**").permitAll()
+                                .requestMatchers("/api/v1/con/**").permitAll()                                         // mail url to create end point.requestMatchers( "/api/v1/pri/**").hasRole(PRINCIPLE.name())
+                                .requestMatchers(GET,"/api/v1/pri/**" ).hasAuthority(PRINCIPLE_READ.name())
+                                .requestMatchers(POST,"/api/v1/pri/**" ).hasAuthority(PRINCIPLE_CREATE.name())
+                                .requestMatchers(PUT,"/api/v1/pri/**" ).hasAuthority(PRINCIPLE_UPDATE.name())
+                                .requestMatchers(DELETE,"/api/v1/pri/**" ).hasAuthority(PRINCIPLE_DELETE.name())
+                                .requestMatchers("/api/v1/hod/**").hasAnyRole(PRINCIPLE.name(), HOD.name())
+                                .requestMatchers(GET, "/api/v1/hod/**").hasAnyAuthority(PRINCIPLE_READ.name(), HOD_READ.name())
+                                .requestMatchers(POST,"/api/v1/hod/**").hasAnyAuthority(PRINCIPLE_CREATE.name(), HOD_CREATE.name())
+                                .requestMatchers(PUT,"/api/v1/hod/**").hasAnyAuthority(PRINCIPLE_UPDATE.name(), HOD_UPDATE.name())
+                                .requestMatchers("/api/v1/hod/**").hasAnyRole(PRINCIPLE.name(), TEACHER.name())
+                                .requestMatchers(GET, "/api/v1/tea/**").hasAnyAuthority(PRINCIPLE_READ.name(), TEACHER_READ.name())
+                                .requestMatchers(POST,"/api/v1/tea/**").hasAnyAuthority(PRINCIPLE_CREATE.name(), TEACHER_CREATE.name())
+                                .requestMatchers(PUT,"/api/v1/tea/**").hasAnyAuthority(PRINCIPLE_UPDATE.name(), TEACHER_UPDATE.name())
+//                        .anyRequest().authenticated())                                                                          //it will access all url which is present in your project.
                 )
                 .authenticationProvider(authenticationProvider)
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

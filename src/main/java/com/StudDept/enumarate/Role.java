@@ -30,6 +30,13 @@ public enum Role {
                     HOD_READ,
                     HOD_UPDATE
             )
+    ),
+    TEACHER(
+            Set.of(
+                    TEACHER_CREATE,
+                    TEACHER_READ,
+                    TEACHER_UPDATE
+            )
     );
 
     @Getter
