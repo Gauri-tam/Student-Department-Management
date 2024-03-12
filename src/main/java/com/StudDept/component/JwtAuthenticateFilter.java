@@ -1,5 +1,6 @@
 package com.StudDept.component;
 
+import com.StudDept.repository.TokenRepository;
 import com.StudDept.services.JwtHelperServices;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -25,6 +26,8 @@ public class JwtAuthenticateFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
 
+    private final TokenRepository tokenRepository;
+
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
@@ -43,8 +46,14 @@ public class JwtAuthenticateFilter extends OncePerRequestFilter {
         userEmail = jwtHelperServices.extractUsername(token);
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-            if (jwtHelperServices.isTokenValid(token, userDetails)){
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            var validToken = tokenRepository.findUserByToken(token)
+                    .map(token1 -> !token1.isExpired() && !token1.isRevoked())
+                    .orElse(false);
+            if (jwtHelperServices.isTokenValid(token, userDetails) && validToken){
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        null,
+                        userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource());
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
