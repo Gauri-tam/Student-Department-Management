@@ -11,6 +11,7 @@ import com.StudDept.request.UserRegistrationRequest;
 import com.StudDept.response.UserAuthenticationResponse;
 import com.StudDept.response.UserRegistrationResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -36,7 +36,9 @@ public class JwtAuthenticateService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserRegistrationResponse registration(UserRegistrationRequest  request){
+    private final EmailSenderService emailSenderService;
+
+    public UserRegistrationResponse registration(UserRegistrationRequest  request) throws MessagingException {
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -54,6 +56,7 @@ public class JwtAuthenticateService {
                     .build();
         }
         userRepository.save(user);
+        emailSenderService.sendEmailToPri(request.getEmail());
         return UserRegistrationResponse.builder()
                 .Username(request.getFirstName()+" "+request.getLastName())
                 .email(request.getEmail())
@@ -61,11 +64,12 @@ public class JwtAuthenticateService {
                 .build();
     }
 
-    public UserAuthenticationResponse authentication(UserAuthenticationRequest request){
+    public UserAuthenticationResponse authentication(UserAuthenticationRequest request) throws MessagingException {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 request.getUsername(),
                 request.getPassword()));
         var user = userRepository.findByEmail(request.getUsername()).orElseThrow();
+        emailSenderService.sendEmailToAuth(request.getUsername()); // sending email
         var access = jwtHelperServices.generateAccessToken(user);
         var refresh = jwtHelperServices.generateRefreshToken(user);
         revokedToken(user);
@@ -99,7 +103,7 @@ public class JwtAuthenticateService {
         tokenRepository.save(token);
     }
 
-    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws Exception {
         final String header = request.getHeader("Authorization");
         final String refreshToken;
         final String userEmail;
@@ -110,15 +114,20 @@ public class JwtAuthenticateService {
         refreshToken = header.substring(7);
         userEmail = jwtHelperServices.extractUsername(refreshToken);
         if (userEmail != null){
-            var user = userRepository.findByEmail(userEmail).orElseThrow();
+            var user = userRepository.findByEmail(userEmail).orElseThrow(); // why is it not finding user from user database!!
             if (jwtHelperServices.isTokenValid(refreshToken, user)){
-               var token = jwtHelperServices.generateRefreshToken(user);
-                var getRefreshToken = UserAuthenticationResponse.builder()
-                       .refreshToken(refreshToken)
-                       .accessToken(token)
-                       .build();
+               var token = jwtHelperServices.generateAccessToken(user);
+               emailSenderService.sendEmailRefreshToken(userEmail);
+               revokedToken(user);
+               userToken(user, token);
+               var getRefreshToken = UserAuthenticationResponse.builder()
+                        .accessToken(token)
+                        .refreshToken(refreshToken)
+                        .build();
                new ObjectMapper().writeValue(response.getOutputStream(), getRefreshToken);
             }
+        }else {
+            throw new Exception("User is not Found!");
         }
     }
 }
