@@ -13,12 +13,12 @@ import static com.StudDept.enumarate.Permission.*;
 @RequiredArgsConstructor
 public enum Role {
 
-    PRINCIPLE(
+    PRINCIPAL(
             Set.of(
-                    PRINCIPLE_CREATE,
-                    PRINCIPLE_READ,
-                    PRINCIPLE_DELETE,
-                    PRINCIPLE_UPDATE,
+                    PRINCIPAL_CREATE,
+                    PRINCIPAL_READ,
+                    PRINCIPAL_DELETE,
+                    PRINCIPAL_UPDATE,
                     HOD_CREATE,
                     HOD_READ,
                     HOD_UPDATE

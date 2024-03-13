@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/pri")
 @RequiredArgsConstructor
-public class PrincipleController {
+public class PrincipalController {
 
     private final PrincipleService principleService;
 

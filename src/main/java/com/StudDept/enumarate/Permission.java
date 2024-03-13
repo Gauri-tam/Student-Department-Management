@@ -6,10 +6,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Permission {
 
-    PRINCIPLE_CREATE("create"),
-    PRINCIPLE_READ("read"),
-    PRINCIPLE_DELETE("delete"),
-    PRINCIPLE_UPDATE("update"),
+    PRINCIPAL_CREATE("create"),
+    PRINCIPAL_READ("read"),
+    PRINCIPAL_DELETE("delete"),
+    PRINCIPAL_UPDATE("update"),
     HOD_CREATE("create"),
     HOD_READ("read"),
     HOD_UPDATE("update"),
