@@ -32,14 +32,12 @@ public class SecurityConfig {
            "/api/v1/auth/**",
             "/api/v1/pri/register/**",
             "/v3/api-docs",
+            "/swagger-ui",
             "/swagger-ui/**",
             "/swagger-ui.html",
-            "/swagger-ui/resources",
-            "/swagger-ui/resources/**",
-            "/configuration/ui",
-            "/configuration/ui/**"
+            "/swagger.ui.index.html",
+            "/v3/api-docs/**"
     };
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)

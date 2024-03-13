@@ -4,6 +4,8 @@ import com.StudDept.entity.Department;
 import com.StudDept.entity.Student;
 import com.StudDept.services.DepartmentServices;
 import com.StudDept.services.StudentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/hod")
+@Tag(name = "HOD Controller", description = "HOD Controller You can Handle all Operation Of HOD")
 @RequiredArgsConstructor
 public class HOD_Controller {
 
@@ -22,6 +25,7 @@ public class HOD_Controller {
     private final StudentService studentService;
 
     @PostMapping("/dept")
+    @Operation(summary = "Create HOD")
     public ResponseEntity<String> createDept(@RequestBody Department department){
         String status = departmentServices.create(department);
         return new ResponseEntity<>(status, HttpStatus.OK);
@@ -58,6 +62,7 @@ public class HOD_Controller {
 
 //----------------------------------------------------------
     @PostMapping("/stud")
+    @Operation(summary = "Create Student")
     public ResponseEntity<String> createStud(@RequestBody Student department){
         String status = studentService.create(department);
         return new ResponseEntity<>(status, HttpStatus.OK);

@@ -7,6 +7,8 @@ import com.StudDept.response.UserRegistrationResponse;
 import com.StudDept.services.DepartmentServices;
 import com.StudDept.services.PrincipleService;
 import com.StudDept.services.StudentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/pri")
+@Tag(name = "Principal Controller", description = "You can Handle all tha Operations Of Principal ")
 @RequiredArgsConstructor
 public class PrincipalController {
 
@@ -29,16 +32,19 @@ public class PrincipalController {
 
     // http://localhost:8080/api/v1/pri/register-hod
     @PostMapping("/register/hod")
+    @Operation(summary = "Create An HOD")
     public ResponseEntity<UserRegistrationResponse> hodRegister(@Valid @RequestBody UserRegistrationRequest request, HttpServletRequest req) throws MessagingException {
         return ResponseEntity.ok(principleService.hodRegister(request, req));
     }
 
     @PostMapping("/register/tea")
+    @Operation(summary = "Create an Teacher")
     public ResponseEntity<UserRegistrationResponse> teaRegister(@Valid @RequestBody UserRegistrationRequest request, HttpServletRequest req) throws MessagingException {
         return ResponseEntity.ok(principleService.teacherRegister(request, req));
     }
 
     @PostMapping("/dept")
+    @Operation(summary = "Create Department")
     public ResponseEntity<String> createDept(@RequestBody Department department){
         String status = departmentServices.create(department);
         return new ResponseEntity<>(status, HttpStatus.OK);
@@ -84,6 +90,7 @@ public class PrincipalController {
     private final StudentService studentService;
 
     @PostMapping("/stud")
+    @Operation(summary = "Create Student")
     public ResponseEntity<String> createStud(@RequestBody Student department){
         String status = studentService.create(department);
         return new ResponseEntity<>(status, HttpStatus.OK);

@@ -2,6 +2,9 @@ package com.StudDept.controller;
 
 import com.StudDept.entity.Department;
 import com.StudDept.services.DepartmentServices;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,18 +15,22 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/con")
+@Tag(name = "Department Controller", description = "Department Controller you can Handle all the Operations")
+@Hidden
 @RequiredArgsConstructor
 public class DepartmentController {
 
     private final DepartmentServices departmentServices;
 
     @PostMapping("/dept")
+    @Operation(summary = "you can Create Department")
     public ResponseEntity<String> createDept(@RequestBody Department department){
         String status = departmentServices.create(department);
        return new ResponseEntity<>(status, HttpStatus.OK);
     }
 
     @PutMapping("/dept/{id}")
+
     public ResponseEntity<String> updateDept(@PathVariable("id") long id,@RequestBody Department department){
         String status = departmentServices.update(id, department);
         return new ResponseEntity<>(status, HttpStatus.CREATED);

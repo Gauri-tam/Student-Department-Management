@@ -2,6 +2,8 @@ package com.StudDept.controller;
 
 import com.StudDept.entity.Student;
 import com.StudDept.services.StudentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,12 +14,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/tea")
+@Tag(name = "Teacher Controller", description = "you can Handle the Operations of Teacher")
 @RequiredArgsConstructor
 public class TeaController {
 
     private final StudentService studentService;
 
     @PostMapping("/stud")
+    @Operation(summary = "Create student")
     public ResponseEntity<String> createStud(@RequestBody Student department){
         String status = studentService.create(department);
         return new ResponseEntity<>(status, HttpStatus.OK);

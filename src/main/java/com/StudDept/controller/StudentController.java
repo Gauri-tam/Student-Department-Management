@@ -2,6 +2,9 @@ package com.StudDept.controller;
 
 import com.StudDept.entity.Student;
 import com.StudDept.services.StudentService;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,12 +15,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/con")
+@Tag(name = "Student Controller", description = "you can handle the Operations of student")
+@Hidden
 @RequiredArgsConstructor
 public class StudentController {
 
     private final StudentService studentService;
 
     @PostMapping("/stud")
+    @Operation(summary = "Create Student")
     public ResponseEntity<String> createStud(@RequestBody Student department){
         String status = studentService.create(department);
         return new ResponseEntity<>(status, HttpStatus.OK);

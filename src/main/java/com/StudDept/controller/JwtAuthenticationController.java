@@ -5,6 +5,7 @@ import com.StudDept.request.UserRegistrationRequest;
 import com.StudDept.response.UserAuthenticationResponse;
 import com.StudDept.response.UserRegistrationResponse;
 import com.StudDept.services.JwtAuthenticateService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@Tag(name = "Jwt Authentication Controller", description = "Create User And Also Authenticate The User.")
 @RequiredArgsConstructor
 public class JwtAuthenticationController {
 
