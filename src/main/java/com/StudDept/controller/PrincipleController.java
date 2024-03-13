@@ -2,8 +2,13 @@ package com.StudDept.controller;
 
 import com.StudDept.entity.Department;
 import com.StudDept.entity.Student;
+import com.StudDept.request.UserRegistrationRequest;
+import com.StudDept.response.UserRegistrationResponse;
 import com.StudDept.services.DepartmentServices;
+import com.StudDept.services.PrincipleService;
 import com.StudDept.services.StudentService;
+import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +22,19 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PrincipleController {
 
+    private final PrincipleService principleService;
+
     private final DepartmentServices departmentServices;
+
+    @PostMapping("/register-hod")
+    public ResponseEntity<UserRegistrationResponse> hodRegister(UserRegistrationRequest request, HttpServletRequest req) throws MessagingException {
+        return ResponseEntity.ok(principleService.hodRegister(request, req));
+    }
+
+    @PostMapping("/register-tea")
+    public ResponseEntity<UserRegistrationResponse> teaRegister(UserRegistrationRequest request, HttpServletRequest req) throws MessagingException {
+        return ResponseEntity.ok(principleService.teacherRegister(request, req));
+    }
 
     @PostMapping("/dept")
     public ResponseEntity<String> createDept(@RequestBody Department department){

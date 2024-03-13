@@ -23,7 +23,7 @@ public class JwtAuthenticationController {
 
     private final JwtAuthenticateService jwtAuthenticateService;
 
-    @PostMapping("/register")
+    @PostMapping("/register-pri")
     public ResponseEntity<UserRegistrationResponse> register(@RequestBody UserRegistrationRequest request) throws MessagingException {
         return ResponseEntity.ok(jwtAuthenticateService.registration(request));
     }

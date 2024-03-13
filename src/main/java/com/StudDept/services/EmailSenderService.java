@@ -74,4 +74,24 @@ public class EmailSenderService {
 
         return "User's Refresh Token Created Successfully!";
     }
+
+    public String sentEmailToHOD(String email) throws MessagingException {
+
+        String sub = "User Register!!";
+        String msg = "Hey! \n I hope this mail get's you well, you are register as an HOD in this data base and you can Access All the Operations in Related to HOD. \n Thank You !";
+
+        buildEmail(email, sub, msg);
+
+        return "User Created Successfully!";
+    }
+
+    public String sentEmailToTea(String email) throws MessagingException {
+
+        String sub = "User Register!!";
+        String msg = "Hey! \n I hope this mail get's you well, you are register as an Teacher in this data base and you can Access All the Operations in Related to Teacher. \n Thank You !";
+
+        buildEmail(email, sub, msg);
+
+        return "User Created Successfully!";
+    }
 }
