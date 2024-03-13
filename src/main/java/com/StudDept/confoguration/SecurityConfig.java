@@ -29,33 +29,36 @@ public class SecurityConfig {
     private final LogoutHandler logoutHandler;
 
     private static final String[] URLS = {
-           " /api/v1/auth/**",
-            "/api/v1/pri/**",
+           "/api/v1/auth/**",
+            "/api/v1/pri/register/**",
             "/v3/api-docs",
+            "/swagger-ui/**",
             "/swagger-ui.html",
-            "/swagger-ui.index.html",
-            "/swagger-ui"
+            "/swagger-ui/resources",
+            "/swagger-ui/resources/**",
+            "/configuration/ui",
+            "/configuration/ui/**"
     };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request->request
-                                .requestMatchers(URLS).permitAll()
-                                //.requestMatchers("/api/v1/con/**").permitAll()                                         // mail url to create end point.requestMatchers( "/api/v1/pri/**").hasRole(PRINCIPLE.name())
-                                .requestMatchers(GET,"/api/v1/pri/**" ).hasAuthority(PRINCIPAL_READ.name())
-                                .requestMatchers(POST,"/api/v1/pri/**" ).hasAuthority(PRINCIPAL_CREATE.name())
-                                .requestMatchers(PUT,"/api/v1/pri/**" ).hasAuthority(PRINCIPAL_UPDATE.name())
-                                .requestMatchers(DELETE,"/api/v1/pri/**" ).hasAuthority(PRINCIPAL_DELETE.name())
-                                .requestMatchers("/api/v1/hod/**").hasAnyRole(PRINCIPAL.name(), HOD.name())
-                                .requestMatchers(GET, "/api/v1/hod/**").hasAnyAuthority(PRINCIPAL_READ.name(), HOD_READ.name())
-                                .requestMatchers(POST,"/api/v1/hod/**").hasAnyAuthority(PRINCIPAL_CREATE.name(), HOD_CREATE.name())
-                                .requestMatchers(PUT,"/api/v1/hod/**").hasAnyAuthority(PRINCIPAL_UPDATE.name(), HOD_UPDATE.name())
-                                .requestMatchers("/api/v1/hod/**").hasAnyRole(PRINCIPAL.name(), TEACHER.name())
-                                .requestMatchers(GET, "/api/v1/tea/**").hasAnyAuthority(PRINCIPAL_READ.name(), TEACHER_READ.name())
-                                .requestMatchers(POST,"/api/v1/tea/**").hasAnyAuthority(PRINCIPAL_CREATE.name(), TEACHER_CREATE.name())
-                                .requestMatchers(PUT,"/api/v1/tea/**").hasAnyAuthority(PRINCIPAL_UPDATE.name(), TEACHER_UPDATE.name())
-//                        .anyRequest().authenticated())                                                                          //it will access all url which is present in your project.
+                        .requestMatchers(URLS).permitAll()
+                        //.requestMatchers("/api/v1/con/**").permitAll()                                                   // mail url to create end point
+                        .requestMatchers( "/api/v1/pri/**").hasRole(PRINCIPAL.name())
+                        .requestMatchers(GET,"/api/v1/pri/**" ).hasAuthority(PRINCIPAL_READ.name())
+                        .requestMatchers(POST,"/api/v1/pri/**" ).hasAuthority(PRINCIPAL_CREATE.name())
+                        .requestMatchers(PUT,"/api/v1/pri/**" ).hasAuthority(PRINCIPAL_UPDATE.name())
+                        .requestMatchers(DELETE,"/api/v1/pri/**" ).hasAuthority(PRINCIPAL_DELETE.name())
+                        .requestMatchers("/api/v1/hod/**").hasAnyRole(PRINCIPAL.name(), HOD.name())
+                        .requestMatchers(GET, "/api/v1/hod/**").hasAnyAuthority(PRINCIPAL_READ.name(), HOD_READ.name())
+                        .requestMatchers(POST,"/api/v1/hod/**").hasAnyAuthority(PRINCIPAL_CREATE.name(), HOD_CREATE.name())
+                        .requestMatchers(PUT,"/api/v1/hod/**").hasAnyAuthority(PRINCIPAL_UPDATE.name(), HOD_UPDATE.name())
+                        .requestMatchers("/api/v1/hod/**").hasAnyRole(PRINCIPAL.name(), TEACHER.name())
+                        .requestMatchers(GET, "/api/v1/tea/**").hasAnyAuthority(PRINCIPAL_READ.name(), TEACHER_READ.name())
+                        .requestMatchers(POST,"/api/v1/tea/**").hasAnyAuthority(PRINCIPAL_CREATE.name(), TEACHER_CREATE.name())
+                        .requestMatchers(PUT,"/api/v1/tea/**").hasAnyAuthority(PRINCIPAL_UPDATE.name(), TEACHER_UPDATE.name())
                 )
                 .authenticationProvider(authenticationProvider)
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

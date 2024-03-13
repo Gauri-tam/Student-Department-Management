@@ -28,12 +28,12 @@ public class PrincipalController {
     private final DepartmentServices departmentServices;
 
     // http://localhost:8080/api/v1/pri/register-hod
-    @PostMapping("/register-hod")
+    @PostMapping("/register/hod")
     public ResponseEntity<UserRegistrationResponse> hodRegister(@Valid @RequestBody UserRegistrationRequest request, HttpServletRequest req) throws MessagingException {
         return ResponseEntity.ok(principleService.hodRegister(request, req));
     }
 
-    @PostMapping("/register-tea")
+    @PostMapping("/register/tea")
     public ResponseEntity<UserRegistrationResponse> teaRegister(@Valid @RequestBody UserRegistrationRequest request, HttpServletRequest req) throws MessagingException {
         return ResponseEntity.ok(principleService.teacherRegister(request, req));
     }
