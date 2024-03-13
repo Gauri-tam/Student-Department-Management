@@ -54,7 +54,7 @@ public class JwtAuthenticationConfiguration {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
         mailSender.setUsername("gauri@weetechsolution.com");                           // your email
-        mailSender.setPassword("*********");                                           // your password
+        mailSender.setPassword("Gauri@123");                                           // your password
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.smtp.auth", "true");

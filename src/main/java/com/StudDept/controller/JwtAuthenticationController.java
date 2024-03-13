@@ -8,8 +8,10 @@ import com.StudDept.services.JwtAuthenticateService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,17 +26,17 @@ public class JwtAuthenticationController {
     private final JwtAuthenticateService jwtAuthenticateService;
 
     @PostMapping("/register-pri")
-    public ResponseEntity<UserRegistrationResponse> register(@RequestBody UserRegistrationRequest request) throws MessagingException {
+    public ResponseEntity<UserRegistrationResponse> register(@Valid @RequestBody UserRegistrationRequest request) throws MessagingException {
         return ResponseEntity.ok(jwtAuthenticateService.registration(request));
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<UserAuthenticationResponse> authentication(@RequestBody UserAuthenticationRequest request) throws MessagingException {
+    public ResponseEntity<UserAuthenticationResponse> authentication(@Valid @RequestBody UserAuthenticationRequest request) throws MessagingException {
         return ResponseEntity.ok(jwtAuthenticateService.authentication(request));
     }
 
     @PostMapping("/refresh")
-    public void  refreshToken(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void  refreshToken(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response) throws Exception {
         jwtAuthenticateService.refreshToken(request, response);
     }
 }

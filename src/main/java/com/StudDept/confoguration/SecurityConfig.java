@@ -28,12 +28,21 @@ public class SecurityConfig {
 
     private final LogoutHandler logoutHandler;
 
+    private static final String[] URLS = {
+           " /api/v1/auth/**",
+            "/api/v1/pri/**",
+            "/v3/api-docs",
+            "/swagger-ui.html",
+            "/swagger-ui.index.html",
+            "/swagger-ui"
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request->request
-                                .requestMatchers("/api/v1/auth/**").permitAll()
-                                .requestMatchers("/api/v1/con/**").permitAll()                                         // mail url to create end point.requestMatchers( "/api/v1/pri/**").hasRole(PRINCIPLE.name())
+                                .requestMatchers(URLS).permitAll()
+                                //.requestMatchers("/api/v1/con/**").permitAll()                                         // mail url to create end point.requestMatchers( "/api/v1/pri/**").hasRole(PRINCIPLE.name())
                                 .requestMatchers(GET,"/api/v1/pri/**" ).hasAuthority(PRINCIPAL_READ.name())
                                 .requestMatchers(POST,"/api/v1/pri/**" ).hasAuthority(PRINCIPAL_CREATE.name())
                                 .requestMatchers(PUT,"/api/v1/pri/**" ).hasAuthority(PRINCIPAL_UPDATE.name())

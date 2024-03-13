@@ -61,7 +61,7 @@ public class PrincipleService {
                 return UserRegistrationResponse.builder()
                         .Username(request.getFirstName()+" "+request.getLastName())
                         .email(request.getEmail())
-                        .message("Principle User Is Created!")
+                        .message("HOD User Is Created!")
                         .build();
             }else {
                 return UserRegistrationResponse.builder()
@@ -107,7 +107,7 @@ public class PrincipleService {
                 return UserRegistrationResponse.builder()
                         .Username(request.getFirstName()+" "+request.getLastName())
                         .email(request.getEmail())
-                        .message("Principle User Is Created!")
+                        .message("Teacher User Is Created!")
                         .build();
             }else {
                 return UserRegistrationResponse.builder()

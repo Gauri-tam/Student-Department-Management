@@ -45,7 +45,7 @@ public class JwtAuthenticateService {
                 .email(request.getEmail())
                 .password(bCryptPasswordEncoder.encode(request.getPassword()))
                 .phone(request.getPhone())
-                .role(Role.PRINCIPLE)
+                .role(Role.PRINCIPAL)
                 .build();
         Optional<User> currentUser = userRepository.findByEmail(request.getEmail());
         if (currentUser.isPresent()){
@@ -60,7 +60,7 @@ public class JwtAuthenticateService {
         return UserRegistrationResponse.builder()
                 .Username(request.getFirstName()+" "+request.getLastName())
                 .email(request.getEmail())
-                .message("Principle User Is Created!")
+                .message("Principal User Is Created!")
                 .build();
     }
 
