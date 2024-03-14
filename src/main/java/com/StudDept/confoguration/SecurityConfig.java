@@ -30,6 +30,7 @@ public class SecurityConfig {
 
     private static final String[] URLS = {
            "/api/v1/auth/**",
+            "/api/v1/users/**",
             "/api/v1/pri/register/**",
             "/v3/api-docs",
             "/swagger-ui",

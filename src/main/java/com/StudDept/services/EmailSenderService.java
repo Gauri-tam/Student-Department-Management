@@ -94,4 +94,12 @@ public class EmailSenderService {
 
         return "User Created Successfully!";
     }
+    public String sendEmailChangePassword(String email, String password) throws MessagingException {
+        String sub = "Change Password Successfully!";
+        String msg = "Hello!\n Change User Password Successfully! \n Now Your Current Password is : "+password+"\n Thank You !";
+
+        buildEmail(email, sub, msg);
+
+        return "changed Password Successfully!";
+    }
 }
