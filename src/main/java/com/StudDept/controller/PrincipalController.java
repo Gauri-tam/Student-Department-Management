@@ -125,7 +125,6 @@ public class PrincipalController {
         return new ResponseEntity<>(status, HttpStatus.CREATED);
     }
 
-
     @DeleteMapping("/stud/{id}")
     public ResponseEntity<Student> deleteStud(@PathVariable("id") Long id, Student student){
         Student status = studentService.delete(id, student);

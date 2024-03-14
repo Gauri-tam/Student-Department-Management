@@ -59,7 +59,7 @@ public class JwtHelperServices {
     }
 
     public String generateRefreshToken(User user){
-        return buildToken(new HashMap<>(), user, refreshToken);
+        return buildToken(new HashMap<>(), user, refreshToken); // we can generate it differently
     }
 
     private  String buildToken(Map<String , Object>claims, User user, long expiration){

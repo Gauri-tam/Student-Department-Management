@@ -48,6 +48,7 @@ public class JwtAuthenticationConfiguration {
         return config.getAuthenticationManager();
     }
 
+//    sender email details
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();

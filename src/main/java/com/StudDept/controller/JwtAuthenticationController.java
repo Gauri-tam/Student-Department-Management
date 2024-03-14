@@ -1,7 +1,9 @@
 package com.StudDept.controller;
 
+import com.StudDept.request.ChangePasswordRequest;
 import com.StudDept.request.UserAuthenticationRequest;
 import com.StudDept.request.UserRegistrationRequest;
+import com.StudDept.response.ChangePasswordResponse;
 import com.StudDept.response.UserAuthenticationResponse;
 import com.StudDept.response.UserRegistrationResponse;
 import com.StudDept.services.JwtAuthenticateService;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 
 @RestController
 @RequestMapping("/api/v1/auth")
