@@ -56,7 +56,7 @@ public class JwtAuthenticateService {
                     .build();
         }
         userRepository.save(user);
-        emailSenderService.sendEmailToPri(request.getEmail());
+       // emailSenderService.sendEmailToPri(request.getEmail());                                                          // it will send email to a user
         return UserRegistrationResponse.builder()
                 .Username(request.getFirstName()+" "+request.getLastName())
                 .email(request.getEmail())
@@ -69,7 +69,7 @@ public class JwtAuthenticateService {
                 request.getUsername(),
                 request.getPassword()));
         var user = userRepository.findByEmail(request.getUsername()).orElseThrow();
-        emailSenderService.sendEmailToAuth(request.getUsername());                                                         // sending email
+       // emailSenderService.sendEmailToAuth(request.getUsername());                                                         // it will send email to a user
         var access = jwtHelperServices.generateAccessToken(user);
         var refresh = jwtHelperServices.generateRefreshToken(user);
         revokedToken(user);
@@ -114,10 +114,10 @@ public class JwtAuthenticateService {
         refreshToken = header.substring(7);
         userEmail = jwtHelperServices.extractUsername(refreshToken);
         if (userEmail != null){
-            var user = userRepository.findByEmail(userEmail).orElseThrow(); // why is it not finding user from user database!!
+            var user = userRepository.findByEmail(userEmail).orElseThrow();
             if (jwtHelperServices.isTokenValid(refreshToken, user)){
                var token = jwtHelperServices.generateAccessToken(user);
-               emailSenderService.sendEmailRefreshToken(userEmail);
+//               emailSenderService.sendEmailRefreshToken(userEmail);                                                      // it will send email to a user
                revokedToken(user);
                userToken(user, token);
                var getRefreshToken = UserAuthenticationResponse.builder()

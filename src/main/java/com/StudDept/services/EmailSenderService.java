@@ -102,4 +102,13 @@ public class EmailSenderService {
 
         return "changed Password Successfully!";
     }
+
+    public String sendUserLogoutEmail(String userEmail) throws MessagingException {
+        String sub = "logout User Successfully!";
+        String msg = "Hello!\n User is Logout..\n Thank You !";
+
+        buildEmail(userEmail, sub, msg);
+
+        return "User Logout Successfully!";
+    }
 }

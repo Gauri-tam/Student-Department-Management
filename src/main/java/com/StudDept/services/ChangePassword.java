@@ -30,7 +30,7 @@ public class ChangePassword {
 
                 user.setPassword(bCryptPasswordEncoder.encode(request.getConformPass()));
                 userRepository.save(user);
-                emailSenderService.sendEmailChangePassword(user.getEmail(), request.getNewPass());
+              //  emailSenderService.sendEmailChangePassword(user.getEmail(), request.getNewPass());                       // it will send email to a user
                 return ChangePasswordResponse.builder()
                         .msg("Your Password has been changed! Please Check Your email!")
                         .build();

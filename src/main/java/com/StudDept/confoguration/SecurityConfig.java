@@ -30,6 +30,8 @@ public class SecurityConfig {
 
     private static final String[] URLS = {
            "/api/v1/auth/**",
+            "/api/v1/auth/logout",
+            "/cloudinary/image",
             "/api/v1/users/**",
             "/api/v1/pri/register/**",
             "/v3/api-docs",
@@ -57,15 +59,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/hod/**").hasAnyRole(PRINCIPAL.name(), TEACHER.name())
                         .requestMatchers(GET, "/api/v1/tea/**").hasAnyAuthority(PRINCIPAL_READ.name(), TEACHER_READ.name())
                         .requestMatchers(POST,"/api/v1/tea/**").hasAnyAuthority(PRINCIPAL_CREATE.name(), TEACHER_CREATE.name())
-                        .requestMatchers(PUT,"/api/v1/tea/**").hasAnyAuthority(PRINCIPAL_UPDATE.name(), TEACHER_UPDATE.name())
-                )
-                .authenticationProvider(authenticationProvider)
+                        .requestMatchers(PUT,"/api/v1/tea/**").hasAnyAuthority(PRINCIPAL_UPDATE.name(), TEACHER_UPDATE.name()))
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthenticateFilter, UsernamePasswordAuthenticationFilter.class)
-                .logout(logout->logout
-                        .logoutSuccessUrl("/api/v1/logout")
-                        .addLogoutHandler(logoutHandler)
-                        .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext()));
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthenticateFilter, UsernamePasswordAuthenticationFilter.class).logout(logout->logout.logoutSuccessUrl("/api/v1/auth/logout").logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext()));
         return http.build();
     }
 }

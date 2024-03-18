@@ -57,7 +57,7 @@ public class PrincipleService {
                             .build();
                 }
                 userRepository.save(user);
-                emailSenderService.sentEmailToHOD(request.getEmail());
+                //emailSenderService.sentEmailToHOD(request.getEmail());                                                 // it will send email to a user
                 return UserRegistrationResponse.builder()
                         .Username(request.getFirstName()+" "+request.getLastName())
                         .email(request.getEmail())
@@ -103,7 +103,7 @@ public class PrincipleService {
                             .build();
                 }
                 userRepository.save(user);
-                emailSenderService.sentEmailToTea(request.getEmail());
+                //emailSenderService.sentEmailToTea(request.getEmail());                                                   // it will send email to a user
                 return UserRegistrationResponse.builder()
                         .Username(request.getFirstName()+" "+request.getLastName())
                         .email(request.getEmail())
